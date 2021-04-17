@@ -142,6 +142,7 @@ const styles = new StyleSheet.create({
 export default {
     data:function(){
         return {
+            id:'',
             svg:TimeSvg,
             styles,
             days: [{
@@ -170,7 +171,12 @@ export default {
         navigation: { type: Object }
     },
     created:function(){
-        this.navigation.navigate("IOSTabs")
+        if(this.id===''){
+             this.navigation.navigate("signin")
+        }else{
+            this.navigation.navigate("IOSTabs")
+        }
+        
     },
     methods: {
         goToWebinar(){

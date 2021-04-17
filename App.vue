@@ -10,10 +10,11 @@ import {
 } from "vue-native-router";
 
 import HomeScreen from './components/HomeScreen.vue'
-import TabBar from './components/TabBar.vue'
+import Log from './components/Log.vue'
 import Diary from './components/Diary.vue'
 import Profile from './components/Profile.vue'
 import Webinar from './components/Webinar.vue'
+import Sleep from './components/SleepTimer.vue';
 
 import MainIcon from './assets/main.svg'
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -42,7 +43,7 @@ const BottomTabNavigator = createBottomTabNavigator(
       }
       },
     Sleep: {
-      screen:TabBar,
+      screen:Sleep,
       navigationOptions:{
         tabBarIcon:({focused})=> {return <Icon name="snooze" size={25} color={focused?"#9E52FF":"#00000"}/>},
         tabBarOptions:{
@@ -69,14 +70,15 @@ const BottomTabNavigator = createBottomTabNavigator(
 const StackNavigator = createStackNavigator(
   {
     IOSTabs: BottomTabNavigator,
-    web: Webinar
+    web: Webinar,
+    signin:Log
   }
 );
 
 const AppNavigator = createAppContainer(StackNavigator);
 
 export default {
-  components:{AppNavigator}
+  components:{AppNavigator},
 }
 </script>
 
