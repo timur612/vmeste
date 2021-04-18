@@ -261,7 +261,7 @@ export default {
   padding: 10;
 }
 .ss-container{
-    margin-left:14;
+    margin-left:13;
 }
 .s-container{
     margin-top:10;
