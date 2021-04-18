@@ -1,5 +1,5 @@
 # salutis
-![alt text](https://sun9-37.userapi.com/impg/d2Ytsru7fB0QPkf-lCYZD6stkt93914YG2ficA/7zVM3o7QB2A.jpg?size=116x134&quality=96&sign=9f98e6eb7c0bc53cbc97255693a4ec6e&type=album)
+![alt text](https://vk.com/doc345263430_596135622?hash=f67a5825f71fce52fb&dl=cfcd2554968e8216a1)
 <br>
 b2b Super app, включающий в себя:
 * календарь с онлайн спортивными занятиями по фитнесу, йоге
@@ -11,4 +11,4 @@ b2b Super app, включающий в себя:
 * node.js ![alt text](https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg)
 
 # Демо
-![alt text](https://youtu.be/RViuEXTntTI)
+* https://youtu.be/RViuEXTntTI
