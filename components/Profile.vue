@@ -15,7 +15,7 @@
             </view>
             <view :style="{padding:10,flexDirection:'row'}">
                 <text :style="{fontSize:16}">Баллы</text>
-                <text :style="{fontSize:16,color:'#c4c4c4',marginLeft:260}">5</text>
+                <text :style="{fontSize:16,color:'#c4c4c4',marginLeft:260}">{{score}}</text>
             </view>
         </view>
 
@@ -103,13 +103,15 @@ export default {
             ],
             name:'',
             surname:'',
+            score:'',
             errors:[]
         }
     },
     created:function(){
         axios.get("https://ululaapi.herokuapp.com/users/607b0fd605c1b73c1c5b00e2")
             .then(response => {this.name=response.data.name 
-            this.surname=response.data.surname})
+            this.surname=response.data.surname
+            this.score=response.data.score})
             .catch(e=>{this.errors.push(e)})
     }
 }
