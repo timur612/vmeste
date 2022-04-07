@@ -77,7 +77,7 @@
         margin-left:10;
     }
     .mt{
-        margin-top: 75;
+        margin-top: 40;
     }
     .mt2{
         margin-top: 50;
