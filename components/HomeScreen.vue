@@ -1,282 +1,249 @@
 <template>
-  <view class="container">
-    <text class="heading">Тренировки</text>
-    <view class="s-container">
-         <view v-for="(day,index) in days" :key="index" class="ss-container" :class="{'cur_day_view':day.week_cur}" > 
-            <text class="calendar" :class="{'cur_day':day.week_cur}">
-                {{day.week_day}}
-            </text>
-            <text class="calendar" :class="{'cur_day_num':day.week_cur}">
-                {{index+17}}
-            </text>
-        </view>
-    </view>
-    
-    <scroll-view  :content-container-style="{contentContainer: {
-  
-    }}">
-        <!-- Content goes here -->
-    
-    <view class="bar">
-        <view class="bar_main">
-            <view class="bar_color"></view>
-        </view>
-        <text class="bar-text">Выполнено тренировок: 1 из 3</text>
-    </view>
-
-    <view>
-        <text class="heading">Сегодня</text>
-        <view class="card shadow-box" :style="styles.shadowBox">
-            <view class="card-img" >
-                <image
-                    :source="require('../assets/cardimg.png')"
-                />
-            </view>
-            <view card="card-body">
-                <text class="card_text">Йога для начинающих</text>
-                <touchable-opacity :on-press="goToWebinar" :style="{flexDirection: 'row', justifyContent: 'flex-end'}">
-                    <image
-                        :style="{marginRight:20}"
-                        :source="require('../assets/ArrowLeftOutline.png')"
-                    />
-                </touchable-opacity>
-                <view class="s-container">
-                    <!-- <svg-uri :width="50" :height="50" :xml="svg"></svg-uri> -->
-                    <text class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/time.png')"
-                    />15 мин</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/ball.png')"
-                    />5 баллов</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:13,width:13}"
-                        :source="require('../assets/notaaccept.png')"
-                    />Не выполнено</text>
-                </view>
-            </view>
-        </view>
-
-        <text class="heading" :style="{fontSize:20,marginTop:10}">Можете также посмотреть</text>
-        <scroll-view horizontal :style="{paddingBottom:10}">
-            <view class="card shadow-box hor_card" :style="styles.shadowBox">
-            <view class="card-img">
-                <image
-                    :source="require('../assets/cardimg2.png')"
-                    :style="{width:360,borderTopLeftRadius:30,borderTopRightRadius:30}"
-                />
-            </view>
-            <view card="card-body" >
-                <text class="card_text">Кардио</text>
-                <view class="s-container">
-                    <text class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/time.png')"
-                    />15 мин</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/ball.png')"
-                    />5 баллов</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:13,width:13}"
-                        :source="require('../assets/notaaccept.png')"
-                    />Не выполнено</text>
-                </view>
-            </view>
-            </view>
-
-            <view class="card shadow-box hor_card" :style="styles.shadowBox">
-            <view class="card-img">
-                <image
-                    :source="require('../assets/cardimg2.png')"
-                    :style="{width:360,borderTopLeftRadius:30,borderTopRightRadius:30}"
-                />
-            </view>
-            <view card="card-body" >
-                <text class="card_text">Кардио</text>
-                <view class="s-container">
-                    <text class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/time.png')"
-                    />15 мин</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:12,width:12}"
-                        :source="require('../assets/ball.png')"
-                    />5 баллов</text>
-                    <text  class="card_text_p"><image
-                        :style="{height:13,width:13}"
-                        :source="require('../assets/notaaccept.png')"
-                    />Не выполнено</text>
-                </view>
-            </view>
-            </view>
-        </scroll-view>
+<scroll-view :content-container-style="{contentContainer: {
         
+    }}">
+    <view :class="platform==='ios' ? 'mtIos' : 'mtAndroid'">
+        <view class="header">
+            <text class="text"> 
+                вместе 
+            </text>
+            <touchable-opacity :class="platform==='ios' ? 'pimgIos' : 'pimgAndroid'" :on-press="goToProfile">
+                
+                <image
+                    class="img"
+                   
+                    :source="require('../assets/profile-icon.png')"
+                />
+            </touchable-opacity>
+        </view>
+
+        <view style="paddingLeft:15;marginTop:30">
+            <view class="carouser-card" style="flexDirection:row">
+                
+                <image
+                    class="img"
+                   
+                    :source="require('../assets/Main/carouselimg.png')"
+                />
+                <view style="paddingLeft:12%">
+                    <text :class="platform==='android'?'textCarMain':'textCarMainIos'">
+                        Получи единую
+                    </text>
+                    <text :class="platform==='android'?'textCarMain':'textCarMainIos'">
+                        карту волонтера
+                    </text>
+                    <text class="textCarMin">
+                        скидки и так далее
+                    </text>
+                </view>
+              
+            </view>
+        </view>
+
+        <view style="marginTop:30">
+            <view style="marginLeft:12;flexDirection:row">
+                <text style="fontSize:20;fontWeight:bold">
+                    Ивенты сейчас
+                </text>
+                <text style="marginLeft:65;marginTop:6;color:#75D811;fontSize:15">
+                    Смотреть все
+                </text>
+            </view>
+        </view>
+
+        <view style="marginTop:30;paddingLeft:5%">
+
+            <view class="card" v-for="(event,key) in events" :key="key">
+                <image
+                    class="img"
+                    :source="require('../assets/Main/card_img.png')"
+                />
+                <touchable-opacity :on-press="goToEvent">
+                    <view style="flexDirection:row;margin-top:4">
+                        <view class="badgetext">
+                            <text style="color:white;fontSize:12;">{{event.badge}}</text>
+                        </view>
+                        <view class="badgetext">
+                            <text style="color:white;fontSize:12;"> {{event.score}} </text>
+                        </view>
+                    </view>
+
+                    <text class="cardtext"> {{event.heading}} </text>
+
+                    <view style="flexDirection:row;marginLeft:8;">
+                        <image v-if="platform==='android'"
+                            style="height:17;width:17"
+                            :source="require('../assets/Main/calendar.png')"
+                        />
+                        <text style="color:#7E7E7E" :class="platform==='ios'?'bt':''">
+                            07.04.22, 13:15 - 08.04.22, 13:15  
+                        </text>
+                    </view>
+
+                    <view style="flexDirection:row;marginLeft:8;marginBottom:3;">
+                        <image
+                            v-if="platform==='android'"
+                            style="height:17;width:17"
+                            :source="require('../assets/Main/marker.png')"
+                        />
+                        <text style="color:#7E7E7E" >
+                            г Якутск, ул Кулаковского, д 34/5 
+                        </text>
+                    </view>
+                </touchable-opacity >
+
+            </view>
+            
+          
+        
+        </view>
+
+        <view style="marginTop:30">
+            <view style="marginLeft:12;flexDirection:row">
+                <text style="fontSize:20;fontWeight:bold">
+                    Организаторы
+                </text>
+                <text style="marginLeft:65;marginTop:6;color:#75D811;fontSize:15">
+                    Смотреть все
+                </text>
+            </view>
+        </view>
+
+        <view style="marginTop:30;paddingLeft:15;">
+
+            <view class="organ" v-for="(organ,key) in organs" :key="key">
+                <image
+                            
+                            :source="require('../assets/Main/profileimg.png')"
+                        />
+                <text style="width:250;marginLeft:15;"> {{organ.name}} </text>
+            </view>
+
+        </view>
+
+        <view style="marginTop:30">
+            <touchable-opacity class="btn" >
+                <text style="fontSize:15;color:white">Верифицировать профиль</text>
+            </touchable-opacity>
+        </view>
+   
     </view>
     </scroll-view>
-  </view>
 </template>
 
 <script>
-import Vue from 'vue-native-core'
-import { SvgXml } from 'react-native-svg';
+import { Platform, StyleSheet } from 'react-native';
+    export default {
+        data(){
+            return{
+                events:[ {badge:'Дети и молодежь', score: '+2', heading: 'Уборка парковой территории'},
+                        {badge:'Образование', score: '+2', heading: 'Помощь ветеранам'},
+                        {badge:'ЗОЖ', score: '+2', heading: 'Самый длинны заголовок нужен здесь для переноса строки дааа'}
 
-Vue.component('svg-uri', SvgXml)
-import TimeSvg from '../assets/time.svg';
-
-import { StyleSheet } from 'react-native';
-
-const styles = new StyleSheet.create({
-  shadowBox: {
-    elevation: 20,
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.2,
-    height: 'auto',
-    backgroundColor: 'white',
-    shadowRadius: 5,
-    borderRadius:30,
-  },
-});
-export default {
-    data:function(){
-        return {
-            id:'',
-            svg:TimeSvg,
-            styles,
-            days: [{
-                week_day:'пн',
-                week_cur:false,},
-                {
-                week_day:'вт',
-                week_cur:false,},
-                {
-                week_day:'ср',
-                week_cur:false,},
-                {
-                week_day:'чт',
-                week_cur:false,},
-                {
-                week_day:'пт',
-                week_cur:false,},
-                {
-                week_day:'сб',
-                week_cur:true,},
-            ]
-            
-        }
-    },
-    props: {
-        navigation: { type: Object }
-    },
-    created:function(){
-        if(this.id===''){
-             this.navigation.navigate("signin")
-        }else{
-            this.navigation.navigate("IOSTabs")
-        }
-        
-    },
-    methods: {
-        goToWebinar(){
-            this.navigation.navigate("web");
+                ],
+                organs: [{name:'Название'},{name:'Фонд “Добрые сердца”'},{name:'Центр по работе с волонтерами Республики Саха(Якутия)'}],
+                platform: Platform.OS
+            }
         },
-    },
-    components:{SvgXml}
-}
+        props: {
+            navigation: {
+            type: Object
+            }
+        },
+        methods: {
+            goToEvent: function() {
+                this.navigation.navigate("Event");
+            },
+            goToProfile: function() {
+                this.navigation.navigate("Profile");
+            },
+        }
+    }
 </script>
 
-<style>
-.hor_card{
-    margin-left:10;
-}
-.card{
-    /* padding:15; */
-    /* width:auto;  */
-    margin-top:10;
-    
-}
-.card-img{
-    align-items: center;
-}
-.card-body{
-   /* padding:25; */
-   border-radius: 30;
-   
-   
-}
-.card_text{
-    font-size: 18;
-    margin-top:24;
-    margin-left:24;
-}
-.card_text_p{
-    margin-left:25;
-    margin-bottom:15;
-    padding-left:3;
-}
+<style scoped> 
+    .bt{
+        margin-bottom: -5%;
+    }
+    .textCarMainIos{
+        margin-bottom:-35;
+        font-size:18;
+        color:#FFFFFF;
+        font-weight: bold;
+    }
+    .mtIos{
+        margin-top:2%;
+    }
+    .mtAndroid{
+        margin-top:10%;
+    }
+    .pimgIos{
+        margin-left:50%;
+        margin-top:12%;
+    }
+    .pimgAndroid{
+        margin-left:130;
+        margin-top:12;
+    }
+    .header{
+        flex-direction:row;
+    }
+    .organ{
+        flex-direction:row;
+        border-right-width:1;
+        border-left-width:1;
+        border-top-width:1;
+        border-bottom-width:1;
+        border-color:#EFEFEF;
+        width:330;
+        margin-bottom:10;
+        border-radius:10;
+        padding:10;
+    }
+    .card{
+        flex-direction:row;
+        width:330;
+        border-right-width:1;
+        border-top-width:1;
+        border-bottom-width:1;
+        border-radius:10;
+        border-color:#EFEFEF;
+        margin-bottom:10;
+    }
+    .cardtext{
+        width: 250;
+        margin-top:5;
+        margin-left:5;
+        margin-bottom:7;
+    }
+    .badgetext{
+        background-color:#75D811;
+        border-radius:5;
+        padding:5;
+        margin-left:10;
+        margin-top:5;
+    }
+    .text{
+        font-size:35;
+        color:#75D811;
+        font-weight: bold;
+    }
+    .textCarMain{
+        font-size:18;
+        color:#FFFFFF;
+        font-weight: bold;
+    }
+    .textCarMin{
+        color:#FFFFFF;
+        
+    }
+    .carouser-card{
+        background-color:#75D811;
+        padding-left:20;
+        padding-top:20;
+        padding-bottom:20;
+        border-radius:10;
+        width:330;
+    }
 
-.bar{
-    width: auto;
-    margin-top:10;
-}
-.bar-text{
-    font-size: 17;
-    color: #c4c4c4;;
-    /* font-weight: bold; */
-}
-.bar_main{
-    width: auto;
-    height: 15;
-    background-color: #EDEDED;
-    border-radius: 30;
-}
-.bar_color{
-    width:35%;
-    height: 15;
-    background-color: #0085ff;
-    border-radius: 30;
-}
-
-.cur_day_num{
-    border-radius: 30px;
-    background-color: white;
-    
-}
-.cur_day_view{
-    background-color: #0085FF;
-    border-radius: 30;
-}
-.cur_day{
-    color:white;
-}
-.calendar{
-    font-size: 20;
-    padding: 10;
-}
-
-.container {
-  flex: 1;
-  padding: 10;
-}
-.ss-container{
-    margin-left:13;
-}
-.s-container{
-    margin-top:10;
-    /* flex:1; */
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.heading {
-  font-size: 24;
-  font-weight:500;
-  color: black;
-  margin-left: 10;
-}
-.text {
-  text-align: center;
-  margin: 10px;
-}
 </style>

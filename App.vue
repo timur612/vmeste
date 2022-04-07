@@ -5,85 +5,50 @@
 <script>
 import {
   createAppContainer,
-  createBottomTabNavigator,
-  createStackNavigator
+  createDrawerNavigator,
+  createStackNavigator,
 } from "vue-native-router";
 
-import HomeScreen from './components/HomeScreen.vue'
-import Log from './components/Log.vue'
-import Diary from './components/Diary.vue'
-import Profile from './components/Profile.vue'
-import Webinar from './components/Webinar.vue'
-import Sleep from './components/SleepTimer.vue';
+import HomeScreen from "./components/HomeScreen.vue";
+import DetailsScreen from "./components/DetailScreen.vue";
+import Main from "./components/Main.vue";
 
-import MainIcon from './assets/main.svg'
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import * as React from 'react';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import Logview from "./components/registration/Logview.vue";
+import Registration from "./components/registration/Registration.vue";
+import LogIn from "./components/registration/LogIn.vue";
 
-const BottomTabNavigator = createBottomTabNavigator(
+const DrawerNavigator = createDrawerNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions:{
-        tabBarIcon:({focused}) =>{ return <Icon name="run-circle" size={25} color={focused?"#0085FF":"#00000"}/>},
-        tabBarOptions:{
-          showLabel:false,
-        },
-        
-      },
+    View: {
+      screen: Logview,
     },
-    Diary: {
-      screen: Diary,
-      navigationOptions: {
-        tabBarIcon:({focused})=> {return <Icon name="book" size={25} color={focused?"#4FC532":"#00000"}/>},
-        tabBarOptions:{
-          showLabel:false,
-        }
-      }
-      },
-    Sleep: {
-      screen:Sleep,
-      navigationOptions:{
-        tabBarIcon:({focused})=> {return <Icon name="snooze" size={25} color={focused?"#9E52FF":"#00000"}/>},
-        tabBarOptions:{
-          showLabel:false,
-        }
-      }
-      },
-    Profile: {
-      screen:Profile,
-      navigationOptions:{
-        tabBarIcon:({focused})=> {return <Icon name="account-circle" size={25} color={focused?"#FFD500":"#00000"}/>},
-        tabBarOptions:{
-          showLabel:false,
-        }
-      }
-      },
-    
+    Registration: Registration,
+    LogIn: LogIn,
+    Main: Main
   },
   {
-    initialRouteName: 'Home'
+    initialRouteName: 'View'
   }
 );
 
 const StackNavigator = createStackNavigator(
   {
-    IOSTabs: BottomTabNavigator,
-    web: Webinar,
-    signin:Log
+    Drawer: {screen:DrawerNavigator,
+    navigationOptions: {
+       title: 'Main',
+       headerShown: false
+     },},
+     
   }
 );
 
 const AppNavigator = createAppContainer(StackNavigator);
 
 export default {
-  components:{AppNavigator},
+  components: { AppNavigator },
 }
 </script>
 
-<style scoped>
-.test{
-  padding:100;
-}
+<style>
+  
 </style>
