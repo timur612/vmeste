@@ -32,50 +32,86 @@
                         />
                         <text style="color:white;marginLeft:2%"> {{email}} </text>
                     </view>
-                    <view style="flexDirection:row">
+                    <!-- <view style="flexDirection:row">
                         <image
                             :source="require('../../assets/Profile/phone-icon.png')"
                         />
                         <text style="color:white;marginLeft:2%">+7 (123) 456-78-90</text>
-                    </view>
+                    </view> -->
                 </view>
             </view>
 
-            <view style="marginTop:30">
-                <view style="marginLeft:0;flexDirection:row">
-                    <text style="fontSize:18;fontWeight:bold">
-                        Отзывы организаторов
-                    </text>
-                    <text style="marginLeft:5;marginTop:6;color:#75D811;fontSize:15">
-                        Смотреть все
-                    </text>
-                </view>
-            </view>
-            <view style="marginTop:10%">
-                <view class="cardevent" v-for="(event,key) in events" :key="key">
-                    <view>
-                        <image
-                            style="marginBottom:25%"
-                            :source="require('../../assets/Profile/profile-icon.png')"
-                        />
-                        <text style="marginBottom:25%;color:#7E7E7E">
-                            02.01.22
-                        </text>
-                        <view style="flexDirection:row">
-                             <image
-                                :source="require('../../assets/Profile/star-icon.png')"
-                            />
-                            <text>
-                                {{event.score}}
-                            </text>
-                        </view>
+            <view style="marginTop:5%" v-if="org==1">
+                <view style="flexDirection:row">
+                    <view class="badgeOrg">
+                        <text style="color:white">Организация</text>
                     </view>
-                    <touchable-opacity >
-                        <text class="cardtext"> {{event.heading}} </text>
-                        <text style="width:24%;marginLeft:1%">{{event.text}}</text>
-                    </touchable-opacity >
+
+                    <touchable-opacity class="badgeCard" :on-press="toVol">
+                        <text style="color:#75D811">Волонтер</text>
+                    </touchable-opacity>
+
+                </view>
+
+                <view class="organization"> 
+                        <image    
+                            style="height:45;width:45"
+                            :source="require('../../assets/Profile/profileimg.png')"
+                        />
+                        <text style="fontSize:20;marginTop:2.5%;marginLeft:2%"> {{organization}} </text>
+                </view>
+
+                <view style="marginTop:30">
+                    <touchable-opacity class="btn" style="padding-left:25%;backgroundColor:#7E7E7E">
+                        <text style="fontSize:15;color:white;">Доступ к организатороу</text>
+                    </touchable-opacity>
+                </view>
+                <view style="marginTop:15">
+                    <touchable-opacity class="btn" style="padding-left:30%;" :on-press="goToAddEvent">
+                        <text style="fontSize:15;color:white;">Добавить ивент</text>
+                    </touchable-opacity>
                 </view>
             </view>
+
+            
+            <view v-if="org==0">
+                <view style="marginTop:30">
+                    <view style="marginLeft:0;flexDirection:row">
+                        <text style="fontSize:18;fontWeight:bold">
+                            Отзывы организаторов
+                        </text>
+                        <text style="marginLeft:5;marginTop:6;color:#75D811;fontSize:15">
+                            Смотреть все
+                        </text>
+                    </view>
+                </view>
+                <view style="marginTop:10%">
+                    <view class="cardevent" v-for="(event,key) in events" :key="key">
+                        <view>
+                            <image
+                                style="marginBottom:25%"
+                                :source="require('../../assets/Profile/profile-icon.png')"
+                            />
+                            <text style="marginBottom:25%;color:#7E7E7E">
+                                02.01.22
+                            </text>
+                            <view style="flexDirection:row">
+                                <image
+                                    :source="require('../../assets/Profile/star-icon.png')"
+                                />
+                                <text>
+                                    {{event.score}}
+                                </text>
+                            </view>
+                        </view>
+                        <touchable-opacity >
+                            <text class="cardtext"> {{event.heading}} </text>
+                            <text style="width:24%;marginLeft:1%">{{event.text}}</text>
+                        </touchable-opacity >
+                    </view>
+                </view>
+            </view>
+            
 
             <view style="marginTop:30">
                 <view style="marginLeft:0;flexDirection:row">
@@ -190,8 +226,8 @@
                 <text style="fontSize:15;color:white;">Верифицировать профиль</text>
             </touchable-opacity>
         </view>
-        <view style="marginTop:15">
-            <touchable-opacity class="btn" style="padding-left:25%;">
+        <view style="marginTop:15" v-if="org==0">
+            <touchable-opacity class="btn" style="padding-left:25%;" :on-press="toOrg">
                 <text style="fontSize:15;color:white;">Стать организатором</text>
             </touchable-opacity>
         </view>
@@ -213,6 +249,8 @@ export default {
             name:'',
             email:'',
             id: '',
+            org: false,
+            organization: '',
             platform: Platform.OS,
             events:[ {score:5,text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...', heading: 'Центр по работе с волонтерами Республики Саха(Якутия)'},
                         {score:4.5,text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...', heading: 'Волонтер штаба'},
@@ -227,16 +265,61 @@ export default {
 
         }
     },
+    props: {
+            navigation: {
+            type: Object
+            }
+    },
     methods:{
+        goToAddEvent(){
+            this.navigation.navigate("AddEvent");
+        },
         async getData(){
             this.id = await AsyncStorage.getItem('id');
             axios.get(`https://vmesteback.herokuapp.com/users/${this.id}`,{headers: {"Content-Type": "application/json"  }})
                 .then(res=>{
                     this.name = res.data.name;
                     this.email = res.data.email;
+                    this.org = res.data.org;
+                    this.organization = res.data.organization;
                 })
                 .catch(err=>{
                     
+                })
+        },
+        async toOrg(){
+            this.id = await AsyncStorage.getItem('id');
+            const body = JSON.stringify({
+                    email: this.email,
+                    password: this.password,
+                    name: this.name,
+                    orgranization:'Фонд “Добрые сердца”',
+                    org: 1
+            })
+            axios.patch(`https://vmesteback.herokuapp.com/users/${this.id}`,body,{headers: {"Content-Type": "application/json"  }})
+                .then(res=>{
+                    this.org = 1;
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+        },
+        async toVol(){
+            this.id = await AsyncStorage.getItem('id');
+            const body = JSON.stringify({
+                    email: this.email,
+                    password: this.password,
+                    name: this.name,
+                    organization:'Фонд “Добрые сердца”',
+                    org: 0
+            })
+            axios.patch(`https://vmesteback.herokuapp.com/users/${this.id}`,body,{headers: {"Content-Type": "application/json"  }})
+                .then(res=>{
+                    this.org = 0;
+                    this.organization = res.data.organization;
+                })
+                .catch(err=>{
+                    console.log(err);
                 })
         }
     },
@@ -247,15 +330,41 @@ export default {
 </script>
 
 <style scoped>
-.btn{
-        
-        padding-top:10;
-        border-radius:10;
+    .organization{
+        flex-direction: row;
+         border-right-width:1;
+        border-top-width:1;
+        border-bottom-width:1;
+        border-left-width:1;
+        border-color:#EFEFEF;
+        padding: 2%;
         width:330;
-        height:40;
-        background-color:#11D81A;
+        margin-top:5%;
     }
-.card{
+    .badgeOrg{
+            background-color:#75D811;
+            border-radius:5;
+            padding:2%;
+    }
+    .badgeCard{
+            border-right-width:1;
+            border-top-width:1;
+            border-bottom-width:1;
+            border-left-width:1;
+            border-color:#75D811;
+            border-radius:5;
+            padding:2%;
+            margin-left:3%;
+    }
+    .btn{
+            
+            padding-top:10;
+            border-radius:10;
+            width:330;
+            height:40;
+            background-color:#75D811;
+        }
+    .card{
         flex-direction:row;
         width:330;
         border-right-width:1;

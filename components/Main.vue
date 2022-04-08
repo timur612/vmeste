@@ -19,6 +19,7 @@ import Event from './events/Event.vue'
 import Function from './events/Function.vue'
 
 import Profile from './profile/Profile.vue'
+import AddEvent from './profile/AddEvent.vue'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as React from 'react';
@@ -85,6 +86,9 @@ const StackNavigator = createStackNavigator(
        headerShown: false
      },},
      Profile:{screen:Profile,navigationOptions: {
+       headerShown: false
+     },},
+     AddEvent:{screen:AddEvent,navigationOptions: {
        headerShown: false
      },},
   }

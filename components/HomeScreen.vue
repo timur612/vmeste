@@ -64,7 +64,7 @@
                             <text style="color:white;fontSize:12;">{{event.badge}}</text>
                         </view>
                         <view class="badgetext">
-                            <text style="color:white;fontSize:12;"> {{event.score}} </text>
+                            <text style="color:white;fontSize:12;"> +2 </text>
                         </view>
                     </view>
 
@@ -93,7 +93,7 @@
                 </touchable-opacity >
 
             </view>
-            
+            <text v-if="ev" style="fontSize:20;marginLeft:30%">Ивентов нет</text>
           
         
         </view>
@@ -110,7 +110,7 @@
         </view>
 
         <view style="marginTop:30;paddingLeft:15;">
-
+                
             <view class="organ" v-for="(organ,key) in organs" :key="key">
                 <image
                             
@@ -118,7 +118,7 @@
                         />
                 <text style="width:250;marginLeft:15;"> {{organ.name}} </text>
             </view>
-
+            
         </view>
 
         <view style="marginTop:30">
@@ -133,14 +133,17 @@
 
 <script>
 import { Platform, StyleSheet } from 'react-native';
+import axios from 'axios'
     export default {
         data(){
             return{
-                events:[ {badge:'Дети и молодежь', score: '+2', heading: 'Уборка парковой территории'},
-                        {badge:'Образование', score: '+2', heading: 'Помощь ветеранам'},
-                        {badge:'ЗОЖ', score: '+2', heading: 'Самый длинны заголовок нужен здесь для переноса строки дааа'}
+                ev:true,
+                events:[],
+                // events:[ {badge:'Дети и молодежь', score: '+2', heading: 'Уборка парковой территории'},
+                //         {badge:'Образование', score: '+2', heading: 'Помощь ветеранам'},
+                //         {badge:'ЗОЖ', score: '+2', heading: 'Самый длинны заголовок нужен здесь для переноса строки дааа'}
 
-                ],
+                // ],
                 organs: [{name:'Название'},{name:'Фонд “Добрые сердца”'},{name:'Центр по работе с волонтерами Республики Саха(Якутия)'}],
                 platform: Platform.OS
             }
@@ -157,6 +160,21 @@ import { Platform, StyleSheet } from 'react-native';
             goToProfile: function() {
                 this.navigation.navigate("Profile");
             },
+            async getEvents(){
+                axios.get('https://vmesteback.herokuapp.com/events',{headers: {"Content-Type": "application/json"  }})
+                    .then(res=>{
+                        this.events=res.data;
+                        if(res.data.length>0){
+                            this.ev = false;
+                        }
+                    })
+                    .catch(err=>{
+
+                    })
+            }
+        },
+        created(){
+            this.getEvents()
         }
     }
 </script>
